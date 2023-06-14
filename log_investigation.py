@@ -85,7 +85,7 @@ def generate_source_ip_log(address):
     """
     # TODO: Complete function body per step 11
     # Get all records that have the specified source IP address
-    data_two = log_analysis_lib.filter_log_by_regex(log_path, r'^.+SRC=\d+\.\d+\.\d+\.\d+ .+$')[0]
+    data_two = log_analysis_lib.filter_log_by_regex(log_path, r'^.+SRC=220.195.35.40 .+$')[0]
     df = pd.DataFrame(data_two)
     log_filename = f"source_ip_{address}.log"
     df.to_csv(log_filename, index=False, header=False, mode='a')

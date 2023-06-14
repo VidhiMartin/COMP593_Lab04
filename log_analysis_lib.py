@@ -89,4 +89,6 @@ def filter_log_by_regex(log_path, regex, ignore_case=True, print_summary=False, 
     return (filtered_records, captured_data)
 
 if __name__ == '__main__':
-    main()        
+    main()  
+
+#Script should be fine.      

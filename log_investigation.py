@@ -25,7 +25,7 @@ def main():
             generate_port_traffic_report(port)
 
     # Generate report of invalid user login attempts
-    generate_invalid_user_report()
+    generate_invalid_user_report(log_path)
 
     # Generate log of records from source IP 220.195.35.40
     generate_source_ip_log('220.195.35.40')
@@ -70,14 +70,13 @@ def generate_invalid_user_report(log_path):
     # TODO: Complete function body per step 10
     # Get data from records that show attempted invalid user login
     # Generate the CSV report
-    data_one = log_analysis_lib.filter_log_by_regex(log_path, r'(^\w+ \d+) (.{8}) .+Invalid user (\w+).+(.{3}\.\d+\.\d+\.\d+)')[0]
-    df = pd.DataFrame(data_one)
-    headings_one = ('Date', 'Time', 'Username', 'IP Address')
+    data_one = log_analysis_lib.filter_log_by_regex(log_path, r'(^\w+ \d+) (.{8}) .+Invalid user (\w+).+(.{3}\.\d+\.\d+\.\d+)')[1]
+    df = pd.DataFrame(data_one, columns=['Date', 'Time', 'Username', 'IP Address'])
     csv_filename1 = "Invalid_user_report.csv"
-    df.to_csv(csv_filename1, index = False, header=headings_one)
+    df.to_csv(csv_filename1, index = False, header=True)
     return 
 
-def generate_source_ip_log(address, log_path):
+def generate_source_ip_log(address):
     """Produces a plain text .log file containing all records from a source log
     file that contain a specified source IP address.
 
@@ -86,7 +85,7 @@ def generate_source_ip_log(address, log_path):
     """
     # TODO: Complete function body per step 11
     # Get all records that have the specified source IP address
-    data_two = log_analysis_lib.filter_log_by_regex(log_path, r'^.+SRC=\d+\.\d+\.\d+\.\d+ .+$')
+    data_two = log_analysis_lib.filter_log_by_regex(log_path, r'^.+SRC=\d+\.\d+\.\d+\.\d+ .+$')[0]
     df = pd.DataFrame(data_two)
     log_filename = f"source_ip_{address}.log"
     df.to_csv(log_filename, index=False, header=False, mode='a')
